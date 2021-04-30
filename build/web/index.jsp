@@ -58,5 +58,12 @@
             </form>
         </div>
         
+        <%--Filter--%>
+        <%
+            if(request.getAttribute("flag")!=null){
+                out.print("<h1> La base y/o la altura no pueden ser iguales o menores de 0. </h1>");
+            }
+        %>
+        
     </body>
 </html>

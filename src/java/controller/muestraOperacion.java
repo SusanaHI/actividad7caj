@@ -48,30 +48,34 @@ public class muestraOperacion extends HttpServlet {
             
             //Triangulo, Cookies and Filter
             
-            
-            String n1 = request.getParameter("base");
-            String n2 = request.getParameter("altura");
+            if(request.getAttribute("flag")!=null){
+                request.setAttribute("flag", 1);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            }else{
+                String n1 = request.getParameter("base");
+                String n2 = request.getParameter("altura");
 
-            model.triangulo e1 = new model.triangulo(n1, n2);
-            double a1 = e1.getArea();
-            double p2 = e1.getPerimeter();
+                model.triangulo e1 = new model.triangulo(n1, n2);
+                double a1 = e1.getArea();
+                double p2 = e1.getPerimeter();
+                                    
+                Cookie ck = new Cookie("base", e1.getBase()+"");
+                response.addCookie(ck);
 
-            Cookie ck = new Cookie("base", e1.getBase()+"");
-            response.addCookie(ck);
+                ck = new Cookie("altura", e1.getAltura()+"");
+                response.addCookie(ck);
 
-            ck = new Cookie("altura", e1.getAltura()+"");
-            response.addCookie(ck);
+                ck = new Cookie("area", e1.getArea()+"");
+                response.addCookie(ck);
 
-            ck = new Cookie("area", e1.getArea()+"");
-            response.addCookie(ck);
+                ck = new Cookie("perimetro", e1.getPerimeter()+"");
+                response.addCookie(ck);
 
-            ck = new Cookie("perimetro", e1.getPerimeter()+"");
-            response.addCookie(ck);
+                request.setAttribute("areaResuelta", a1);
+                request.setAttribute("perimetroResuelto", p2);
 
-            request.setAttribute("areaResuelta", a1);
-            request.setAttribute("perimetroResuelto", p2);
-
-            request.getRequestDispatcher("/muestraResultado.jsp").forward(request, response);
+                request.getRequestDispatcher("/muestraResultado.jsp").forward(request, response);
+            }
         }
     }
 
